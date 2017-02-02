@@ -1,6 +1,7 @@
 package com.jspark.android.musicplayer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,11 +24,13 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
 
     ArrayList<Music> data;
     Context context;
+    Intent i = null;
 
 
     public MusicAdapter(ArrayList<Music> data, Context context) {
         this.data = data;
         this.context = context;
+        i = new Intent(context, PlayActivity.class);
     }
 
     @Override
@@ -48,7 +51,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
         //holder.img.setImageBitmap(music.album_art);
 
         // Glide를 활용하여 이미지 삽입해주기
-        Glide.with(context).load(music.album_img).into(holder.img);
+        Glide.with(context).load(music.album_img).placeholder(android.R.drawable.ic_dialog_alert).into(holder.img);
         //글라이드.활용(context).load(uri).into(위젯);
 
         holder.id.setText(music.id);
@@ -56,6 +59,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
         holder.title.setText(music.title);
         holder.artist.setText(music.artist);
         holder.length.setText("0"+dur_min+":"+dur_sec);
+        holder.position = position;
 
         Animation anime = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
         holder.card.setAnimation(anime);
@@ -72,6 +76,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
         TextView id, album_id, title, artist, length;
         CardView card;
 
+        int position;
+
         public Holder(View itemView) {
             super(itemView);
 
@@ -82,6 +88,14 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
             artist = (TextView)itemView.findViewById(R.id.txtArtist);
             length = (TextView)itemView.findViewById(R.id.txtLength);
             card = (CardView)itemView.findViewById(R.id.cardView);
+
+            card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    i.putExtra("position", position);
+                    context.startActivity(i);
+                }
+            });
 
         }
     }

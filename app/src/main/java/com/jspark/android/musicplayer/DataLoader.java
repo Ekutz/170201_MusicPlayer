@@ -18,27 +18,22 @@ import java.util.ArrayList;
 
 public class DataLoader {
 
-    ArrayList<Music> datas;
+    private static ArrayList<Music> datas = new ArrayList<>();
     Context context;
 
-    public DataLoader(Context context) {
-        datas = new ArrayList<>();
-        this.context = context;
-        load();
+    public static ArrayList<Music> load(Context context) {
+        if(datas==null|| datas.size()==0) {
+            getContacts(context);
+        }
+        return datas;
     }
 
-    public void load() {
-
-        datas = getContacs();
-    }
-
-    public ArrayList<Music> getContacs() {
-        ArrayList<Music> musicList = new ArrayList<>();
+    public static void getContacts(Context context) {
 
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
 
         String projections[] = new String[] {
-                MediaStore.Audio.Media.DISPLAY_NAME,
+                MediaStore.Audio.Media._ID,
                 MediaStore.Audio.Media.ALBUM_ID,
                 MediaStore.Audio.Media.TITLE,
                 MediaStore.Audio.Media.ARTIST,
@@ -68,7 +63,8 @@ public class DataLoader {
 
                 mMusic.album_img = getAlbumImgSimple(""+mMusic.album_id);
 
-
+                mMusic.uri = getMusicUri(mMusic.id);
+                //Log.d("uri", String.valueOf(mMusic.uri));
                 // 가장 간단하고 무식한 방법
                 // 이미지가 무거워짐
                 //mMusic.album_art = Uri.parse("content://media/external/audio/albumart/"+mMusic.album_id);
@@ -77,17 +73,16 @@ public class DataLoader {
                 // 500개 정도 가져오면 앱 터짐
                 //mMusic.album_art = getAlbumImgBitmap(""+mMusic.album_id);
 
-
-
-                musicList.add(mMusic);
+                datas.add(mMusic);
             }
             cursor.close();
         }
-
-        return musicList;
     }
 
-
+    private static Uri getMusicUri(String music_id) {
+        Uri contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        return Uri.withAppendedPath(contentUri, music_id);
+    }
 
 
     // 경로에서 이미지를 가져다가 Bitmap 형태로 가져오는 방법
@@ -116,7 +111,7 @@ public class DataLoader {
 
     // 가장 간단하고 무식한 방법
     // 이미지가 안뜨는 경우도 생기고 view가 생길때 마다 가져오니 앱이 무거워짐
-    private Uri getAlbumImgSimple(String album_id) {
+    private static Uri getAlbumImgSimple(String album_id) {
         return Uri.parse("content://media/external/audio/albumart/"+album_id);
     }
 }

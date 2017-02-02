@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_play"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jspark.android.musicplayer.PlayActivity">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/viewPager"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintBottom_toTopOf="@+id/seekBar"
+            android:layout_marginBottom="8dp">
+        </android.support.v4.view.ViewPager>
+
+        <SeekBar
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+            android:id="@+id/seekBar" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            app:layout_constraintLeft_toLeftOf="@+id/viewPager"
+            app:layout_constraintRight_toRightOf="@+id/viewPager"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="100dp"
+            android:id="@+id/relativeLayout">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/ic_media_rew"
+                android:layout_alignBottom="@+id/btnPlay"
+                android:layout_toLeftOf="@+id/btnPlay"
+                android:layout_toStartOf="@+id/btnPlay"
+                android:layout_marginRight="48dp"
+                android:layout_marginEnd="48dp"
+                android:id="@+id/btnRewind" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/ic_media_play"
+                android:id="@+id/btnPlay"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/ic_media_ff"
+                android:layout_alignTop="@+id/btnPlay"
+                android:layout_toRightOf="@+id/btnPlay"
+                android:layout_toEndOf="@+id/btnPlay"
+                android:layout_marginLeft="50dp"
+                android:layout_marginStart="50dp"
+                android:id="@+id/btnForwardF" />
+
+
+        </RelativeLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</RelativeLayout>

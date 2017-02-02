@@ -57,10 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void init() {
-        ArrayList<Music> data;
-
-        DataLoader dl = new DataLoader(MainActivity.this);
-        data = dl.datas;
+        ArrayList<Music> data = DataLoader.load(this);
 
         lv = (RecyclerView) findViewById(R.id.recyView);
         MusicAdapter adapter = new MusicAdapter(data, this);

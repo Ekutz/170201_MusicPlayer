@@ -11,6 +11,7 @@ public class Music {
 
     Bitmap album_art;
     Uri album_img;
+    Uri uri;
     String id;
     int album_id;
     String title;
